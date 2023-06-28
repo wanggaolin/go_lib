@@ -1,10 +1,8 @@
-package log
+package pub
 
 import (
 	"errors"
 	"fmt"
-	"github.com/wanggaolin/go_lib/src/file"
-	"github.com/wanggaolin/go_lib/src/lib"
 	"io"
 	"os"
 	"path"
@@ -16,8 +14,8 @@ import (
 // date: 2021/12/10
 // email: brach@lssin.com
 
-func Interface_log_backup(file_path string, back_dir string, file_action string) (bool, error) {
-	if file.PathExists(file_path) == false {
+func (f *fileing) Interface_log_backup(file_path string, back_dir string, file_action string) (bool, error) {
+	if f.PathExists(file_path) == false {
 		return false, errors.New(file_path + " :No such file or directory")
 	}
 
@@ -50,22 +48,22 @@ func Interface_log_backup(file_path string, back_dir string, file_action string)
 		}
 	}
 
-	if file.PathExists(backup_directory) == false {
+	if f.PathExists(backup_directory) == false {
 		_error := os.MkdirAll(backup_directory, os.ModePerm)
 		if _error != nil {
 			return false, _error
 		}
 	}
 
-	if file.IsDir(backup_directory) == false {
+	if f.IsDir(backup_directory) == false {
 		return false, errors.New(backup_directory + " :This directory is not a directory")
 	}
 	new_file := path.Join(backup_directory, path.Base(file_path))
 
-	if file.PathExists(new_file) {
-		Log_warr(new_file, ":This file already exists")
-		for _, n := range lib.Make_range(1, 1024) {
-			if file.PathExists(fmt.Sprintf("%v.%v", new_file, n)) == false {
+	if f.PathExists(new_file) {
+		Log.Log_warr(new_file, ":This file already exists")
+		for _, n := range Make_range(1, 1024) {
+			if f.PathExists(fmt.Sprintf("%v.%v", new_file, n)) == false {
 				new_file = fmt.Sprintf("%v.%v", new_file, n)
 				break
 			}
@@ -93,9 +91,9 @@ func Interface_log_backup(file_path string, back_dir string, file_action string)
 		if _err != nil {
 			return false, _err
 		}
-		Log_debug(file_path, new_file, "Move success")
+		Log.Log_debug(file_path, new_file, "Move success")
 	} else {
-		Log_debug(file_path, new_file, "Copy success")
+		Log.Log_debug(file_path, new_file, "Copy success")
 	}
 	return true, nil
 }

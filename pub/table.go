@@ -1,4 +1,4 @@
-package lib
+package pub
 
 import (
 	"fmt"
@@ -7,27 +7,22 @@ import (
 
 // date: 2022/01/28
 // email: brach@lssin.com
+var Table *table
 
-type Table struct {
-	w    *write
-	test string
+func init() {
+	Table = &table{}
 }
 
-type write struct {
-	cel  []int
-	line [][]string
-}
-
-func (t *Table) AddHeader(args ...interface{}) {
+func (t *table) AddHeader(args ...interface{}) {
 	t.w = new(write)
 	t.to_build(args)
 }
 
-func (t *Table) AddLine(args ...interface{}) {
+func (t *table) AddLine(args ...interface{}) {
 	t.to_build(args)
 }
 
-func (t *Table) to_build(args []interface{}) {
+func (t *table) to_build(args []interface{}) {
 	if len(t.w.cel) < len(args) {
 		c := len(args) - len(t.w.cel)
 		for _c := range Make_range(1, c) {
@@ -46,11 +41,11 @@ func (t *Table) to_build(args []interface{}) {
 	t.w.line = append(t.w.line, ar)
 }
 
-func (t *Table) to_string(args interface{}) string {
+func (t *table) to_string(args interface{}) string {
 	return fmt.Sprintf("%v", args)
 }
 
-func (t *Table) to_interval(x string) string {
+func (t *table) to_interval(x string) string {
 	format_text := ""
 	for _, n := range t.w.cel {
 		interval := x
@@ -63,12 +58,12 @@ func (t *Table) to_interval(x string) string {
 	return format_text
 }
 
-func (t *Table) _center(x string) string {
+func (t *table) _center(x string) string {
 	s := strings.Split(x, "")
 	return strings.Join(s[:len(x)/2], "")
 }
 
-func (t *Table) get_list(interval string) []string {
+func (t *table) get_list(interval string) []string {
 	var data []string
 	for n, h := range t.w.line {
 		format_text := ""
@@ -98,11 +93,11 @@ func (t *Table) get_list(interval string) []string {
 	return data
 }
 
-func (t *Table) Get_text() string {
+func (t *table) Get_text() string {
 	return strings.Join(t.get_list("-"), "\n")
 }
 
-func (t *Table) Print() {
+func (t *table) Print() {
 	for _, line := range t.get_list("-") {
 		fmt.Println(line)
 	}

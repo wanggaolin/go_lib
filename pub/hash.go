@@ -1,4 +1,4 @@
-package hash
+package pub
 
 import (
 	"bytes"
@@ -21,9 +21,6 @@ var Hash *hash
 
 func init() {
 	Hash = &hash{}
-}
-
-type hash struct {
 }
 
 func (h *hash) _pKCS7Padding(ciphertext []byte, blockSize int) []byte {

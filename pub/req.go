@@ -1,4 +1,4 @@
-package request
+package pub
 
 import (
 	"io/ioutil"
@@ -10,10 +10,16 @@ import (
 // date: 2022/01/05
 // email: brach@lssin.com
 
-type Requests struct {
+var Request *requests
+
+func init() {
+	Request = &requests{}
 }
 
-func (r Requests) Post(host string, post string, timeout_size int64) (string, int, error) {
+type requests struct {
+}
+
+func (r requests) Post(host string, post string, timeout_size int64) (string, int, error) {
 	timeout := time.Duration(timeout_size) * time.Second
 	client := http.Client{
 		Timeout: timeout,
