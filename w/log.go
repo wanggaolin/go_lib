@@ -18,22 +18,22 @@ func init() {
 
 }
 
-func (l *loging) Log_debug(arg ...string) {
+func (l *loging) Log_debug(arg ...any) {
 	log.Println("[DEBUG]", arg)
 }
 
-func (l *loging) Log_error(arg ...string) {
+func (l *loging) Log_error(arg ...any) {
 	log.Println("[ERROR]", arg)
 }
 
-func (l *loging) Log_std_err(arg ...string) {
+func (l *loging) Log_std_err(arg ...any) {
 	timespace := time.Now().Format("2006-01-02 15:04:05")
 	fmt.Fprintf(os.Stderr, fmt.Sprintln(timespace, "[ERROR]", arg))
 }
-func (l *loging) Log_panic(arg ...string) {
+func (l *loging) Log_panic(arg ...any) {
 	log.Panic("[ERROR]", arg)
 }
-func (l *loging) Log_warr(arg ...string) {
+func (l *loging) Log_warr(arg ...any) {
 	log.Println("[WARRING]", arg)
 }
 
