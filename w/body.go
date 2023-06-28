@@ -16,7 +16,8 @@ type hash struct {
 }
 type timeing struct {
 }
-
+type set struct {
+}
 type table struct {
 	w    *write
 	test string
