@@ -1,4 +1,4 @@
-package pub
+package w
 
 import (
 	"errors"
