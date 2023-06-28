@@ -1,5 +1,12 @@
 ### Install 
-go get  github.com/wanggaolin/go_lib/w@v1.10
+```shell
+go get github.com/wanggaolin/go_lib
+```
+
+#### Update
+```shell
+go get github.com/wanggaolin/go_lib
+```
 
 
 ### example
