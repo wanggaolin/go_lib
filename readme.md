@@ -1,2 +1,2 @@
 ### Install 
-go get  github.com/wanggaolin/go_lib@v1.04
+go get  github.com/wanggaolin/go_lib/w@v1.04
