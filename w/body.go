@@ -1,5 +1,7 @@
 package w
 
+import "regexp"
+
 type loging struct {
 }
 
@@ -26,4 +28,8 @@ type table struct {
 type write struct {
 	cel  []int
 	line [][]string
+}
+
+type check struct {
+	check_ip *regexp.Regexp
 }

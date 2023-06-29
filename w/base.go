@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"regexp"
-	"strconv"
 	"strings"
 )
 
@@ -27,21 +25,6 @@ func Show_version(GoVersion string, Auchar string, AppVersion string) {
 App Auchar: %v
 GoLang Version: %v
 `, AppVersion, Auchar, GoVersion)
-}
-
-func Check_ip(ip_name string) bool {
-	re_ip := regexp.MustCompile(`^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$`)
-	filter_ip := re_ip.FindStringSubmatch(ip_name)
-	if len(filter_ip) > 1 {
-		a, _ := strconv.Atoi(filter_ip[1])
-		b, _ := strconv.Atoi(filter_ip[2])
-		c, _ := strconv.Atoi(filter_ip[3])
-		d, _ := strconv.Atoi(filter_ip[4])
-		if a <= 255 && b <= 255 && c <= 255 && d <= 255 && a > 0 && d > 0 {
-			return true
-		}
-	}
-	return false
 }
 
 func Shell_run(command string, arg ...string) (string, error) {

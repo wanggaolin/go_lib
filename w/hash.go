@@ -7,6 +7,7 @@ import (
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
+	b64 "encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"net/url"
@@ -35,6 +36,7 @@ func (h *hash) _pKCS7UnPadding(origData []byte) []byte {
 	return origData[:(length - unpadding)]
 }
 
+// 加密
 func (h *hash) AesEncrypt_CBC(origData, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -95,4 +97,13 @@ func (h *hash) Md5(content string) string {
 func (h *hash) Sha1(content string) string {
 	x := sha1.Sum([]byte(content))
 	return hex.EncodeToString(x[:])
+}
+
+// 加密
+func (h hash) Base64_Encode(content []byte) string {
+	return b64.StdEncoding.EncodeToString(content)
+}
+
+func (h hash) Base64_Decode(content string) ([]byte, error) {
+	return b64.StdEncoding.DecodeString(content)
 }
