@@ -16,10 +16,13 @@ type System struct {
 
 type hash struct {
 }
+
 type timeing struct {
 }
+
 type set struct {
 }
+
 type table struct {
 	w    *write
 	test string
@@ -32,4 +35,7 @@ type write struct {
 
 type check struct {
 	check_ip *regexp.Regexp
+}
+
+type go_string struct {
 }
