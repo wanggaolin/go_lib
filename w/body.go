@@ -40,6 +40,5 @@ type check struct {
 type go_string struct {
 }
 
-type arry string{
-
+type arry struct {
 }
