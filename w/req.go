@@ -54,24 +54,6 @@ func (r *requests) Head(host string, timeout_size int64) (header *http.Response,
 	return resp, err
 }
 
-func (r *requests) Get(host string, timeout_size int64) (header *http.Response, err error) {
-	timeout := time.Duration(timeout_size) * time.Second
-	client := http.Client{
-		Timeout: timeout,
-	}
-	req, err := http.NewRequest("HEAD", host, nil)
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
-	if err != nil {
-		return header, err
-	}
-	resp, err := client.Do(req)
-	if err != nil {
-		return header, err
-	}
-	defer resp.Body.Close()
-	return resp, err
-}
-
 func (r *requests) Get(host string, timeout_size int64) (response string, code int, err error) {
 	timeout := time.Duration(timeout_size) * time.Second
 	client := http.Client{
