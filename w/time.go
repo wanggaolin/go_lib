@@ -13,6 +13,10 @@ func init() {
 // date: 2022/02/28
 // email: brach@lssin.com
 
+func (t *timeing) Current_day1() string {
+	return time.Now().Format("2006-01-02")
+}
+
 func (t *timeing) Current_time1() string {
 	return time.Now().Format("2006-01-02 15:04:05")
 }
