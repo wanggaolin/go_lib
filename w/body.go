@@ -42,3 +42,6 @@ type go_string struct {
 
 type arry struct {
 }
+
+type w_json struct {
+}
