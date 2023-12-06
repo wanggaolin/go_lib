@@ -17,3 +17,11 @@ func (j *w_json) Json_print(data interface{}) (jsonString string, err error) {
 	}
 	return string(jsonByte), err
 }
+
+func (j *w_json) Json_dumps(data interface{}) (jsonString string, err error) {
+	jsonByte, err := json.Marshal(data)
+	if err != nil {
+		return jsonString, err
+	}
+	return string(jsonByte), err
+}
