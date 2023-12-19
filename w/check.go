@@ -49,3 +49,14 @@ func (c *check) Check_ip_private(ip_name string) bool {
 	}
 	return false
 }
+
+func (c *check) Check_number(x string) bool {
+	if x == "" {
+		return false
+	}
+	filter1 := regexp.MustCompile(`^[0-9]+$`)
+	if filter1.FindAllStringSubmatch(x, -1) != nil {
+		return true
+	}
+	return false
+}

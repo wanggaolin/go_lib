@@ -1,6 +1,9 @@
 package w
 
-import "regexp"
+import (
+	"regexp"
+	"sync"
+)
 
 type loging struct {
 }
@@ -44,4 +47,11 @@ type arry struct {
 }
 
 type w_json struct {
+}
+
+type lock struct {
+	lock_map sync.Map
+}
+
+type xlsx struct {
 }
