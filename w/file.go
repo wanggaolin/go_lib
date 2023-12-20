@@ -1,6 +1,8 @@
 package w
 
 import (
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"gopkg.in/yaml.v2"
 	"io"
@@ -138,4 +140,20 @@ func (f *fileing) List_directory(directory_name string) ([]fs.FileInfo, error) {
 		data = append(data)
 	}
 	return data, nil
+}
+
+func (f *fileing) File_md5(file_path string) (md5String string, err error) {
+	file, err := os.Open(file_path)
+	if err != nil {
+		return md5String, err
+	}
+	defer file.Close()
+
+	file_hash := md5.New()
+	if _, err = io.Copy(file_hash, file); err != nil {
+		return md5String, err
+	}
+	md5Hash := file_hash.Sum(nil)
+	md5String = hex.EncodeToString(md5Hash)
+	return md5String, err
 }

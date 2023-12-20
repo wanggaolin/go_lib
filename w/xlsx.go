@@ -12,7 +12,7 @@ func init() {
 	Xlsx = &xlsx{}
 }
 
-type Xlsx_get_data_args struct {
+type Args_Xlsx_get_data struct {
 	File_path   string   //文件路径
 	Menu        []string //对应菜单栏，可为空
 	Sheet_index int      //读取sheet索引，默认为0
@@ -20,13 +20,13 @@ type Xlsx_get_data_args struct {
 	Y           int      //正文从第几列开始读，默认为0
 }
 
-type Xlsx_write_data_args struct {
+type Args_Xlsx_write_data struct {
 	File_path  string //创建文件路径
 	Sheet_Name string //创建表名
-	Data       [][]Xlsx_line_data
+	Data       [][]Args_Xlsx_line_data
 }
 
-type Xlsx_line_data struct {
+type Args_Xlsx_line_data struct {
 	Content    string // 内容
 	Color      string // 文字颜色,十六进制
 	Background string // 背景填充色,十六进制
@@ -78,7 +78,7 @@ func (x *xlsx) get_sheet_name(sheel_list []string, n int) (name string, err erro
 	return name, errors.New("invalid sheet index")
 }
 
-func (x *xlsx) get_cell_style(arg Xlsx_line_data) (style *excelize.Style, is_set bool) {
+func (x *xlsx) get_cell_style(arg Args_Xlsx_line_data) (style *excelize.Style, is_set bool) {
 	style = &excelize.Style{}
 	if arg.Color != "" {
 		style.Font = &excelize.Font{
@@ -103,7 +103,7 @@ func (x *xlsx) get_cell_style(arg Xlsx_line_data) (style *excelize.Style, is_set
 	return style, is_set
 }
 
-func (x *xlsx) Read(arg Xlsx_get_data_args) (mapData []map[string]string, err error) {
+func (x *xlsx) Read(arg Args_Xlsx_get_data) (mapData []map[string]string, err error) {
 	f, err := excelize.OpenFile(arg.File_path)
 	if err != nil {
 		return mapData, err
@@ -137,7 +137,7 @@ func (x *xlsx) Read(arg Xlsx_get_data_args) (mapData []map[string]string, err er
 	return mapData, err
 }
 
-func (x *xlsx) Write(arg Xlsx_write_data_args) (err error) {
+func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 	if arg.Sheet_Name == "" {
 		arg.Sheet_Name = "Sheet1"
 	}
