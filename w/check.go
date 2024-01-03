@@ -50,13 +50,20 @@ func (c *check) Check_ip_private(ip_name string) bool {
 	return false
 }
 
-func (c *check) Check_number(x string) bool {
-	if x == "" {
+func (c *check) Check_int(x string) bool {
+	_, err := strconv.ParseInt(x, 10, 64)
+	if err == nil {
+		return true
+	} else {
 		return false
 	}
-	filter1 := regexp.MustCompile(`^[0-9]+$`)
-	if filter1.FindAllStringSubmatch(x, -1) != nil {
+}
+
+func (c *check) Check_float(x string) bool {
+	_, err := strconv.ParseFloat(x, 64)
+	if err == nil {
 		return true
+	} else {
+		return false
 	}
-	return false
 }
