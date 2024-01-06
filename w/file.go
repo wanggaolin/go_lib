@@ -19,6 +19,7 @@ var File *fileing
 func init() {
 	File = &fileing{}
 }
+
 func (f *fileing) File_copy(src_path string, dst_path string) (bool, error) {
 	srcFile, err := os.Open(src_path)
 	if err != nil {
