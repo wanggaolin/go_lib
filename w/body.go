@@ -43,6 +43,9 @@ type check struct {
 type go_string struct {
 }
 
+type tea struct {
+}
+
 type arry struct {
 }
 

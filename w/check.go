@@ -1,6 +1,8 @@
 package w
 
 import (
+	"fmt"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
@@ -65,5 +67,18 @@ func (c *check) Check_float(x string) bool {
 		return true
 	} else {
 		return false
+	}
+}
+
+func Valid(a interface{}) {
+	v := reflect.ValueOf(a)
+	t := v.Type()
+	for i := 0; i < t.NumField(); i++ {
+		for _, item := range strings.Split(t.Field(i).Tag.Get("validate"), ",") {
+			e := strings.Split(item, ":")
+			if len(e) > 1 {
+				fmt.Println(e)
+			}
+		}
 	}
 }

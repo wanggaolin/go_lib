@@ -27,16 +27,21 @@ GoLang Version: %v
 `, AppVersion, Auchar, GoVersion)
 }
 
-func Shell_run(command string, arg ...string) (string, error) {
+func Shell_run(command string, arg ...string) (output string, err error) {
+	command, err = exec.LookPath(command)
+	if err != nil {
+		fmt.Println(err, 123)
+		return output, err
+	}
 	cmd := exec.Command(command, arg...)
 	cmd.Env = os.Environ()
 	var out bytes.Buffer
 	var stderr bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &stderr
-	err := cmd.Run()
+	err = cmd.Run()
 	if err != nil {
-		return "", errors.New(fmt.Sprintf("%v(%v)", strings.TrimSpace(stderr.String()), err.Error()))
+		return output, errors.New(fmt.Sprintf("%v(%v)", strings.TrimSpace(stderr.String()), err.Error()))
 	}
 	return out.String(), nil
 }
