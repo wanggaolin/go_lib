@@ -30,7 +30,6 @@ GoLang Version: %v
 func Shell_run(command string, arg ...string) (output string, err error) {
 	command, err = exec.LookPath(command)
 	if err != nil {
-		fmt.Println(err, 123)
 		return output, err
 	}
 	cmd := exec.Command(command, arg...)
