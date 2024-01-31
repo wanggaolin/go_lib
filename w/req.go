@@ -39,7 +39,7 @@ func (r *requests) Post(host string, post string, timeout_size int64) (string, i
 }
 
 // post Json
-func (r *requests) Post_vs1(host string, post []byte, timeout_size int64) (string, int, error) {
+func (r *requests) Post_v1(host string, post []byte, timeout_size int64) (string, int, error) {
 	timeout := time.Duration(timeout_size) * time.Second
 	client := http.Client{
 		Timeout: timeout,
