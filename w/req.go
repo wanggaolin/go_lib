@@ -1,6 +1,7 @@
 package w
 
 import (
+	"bytes"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -19,12 +20,31 @@ func init() {
 type requests struct {
 }
 
+// post from
 func (r *requests) Post(host string, post string, timeout_size int64) (string, int, error) {
 	timeout := time.Duration(timeout_size) * time.Second
 	client := http.Client{
 		Timeout: timeout,
 	}
 	resp, err := client.Post(host, "application/x-www-form-urlencoded", strings.NewReader(post))
+	if err != nil {
+		return "", 0, err
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", 0, err
+	}
+	return string(body), resp.StatusCode, nil
+}
+
+// post Json
+func (r *requests) Post_vs1(host string, post []byte, timeout_size int64) (string, int, error) {
+	timeout := time.Duration(timeout_size) * time.Second
+	client := http.Client{
+		Timeout: timeout,
+	}
+	resp, err := client.Post(host, "application/json", bytes.NewBuffer(post))
 	if err != nil {
 		return "", 0, err
 	}
