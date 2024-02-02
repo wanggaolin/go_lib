@@ -39,12 +39,18 @@ func (r *requests) Post(host string, post string, timeout_size int64) (string, i
 }
 
 // post Json
-func (r *requests) Post_v1(host string, post []byte, timeout_size int64) (string, int, error) {
-	timeout := time.Duration(timeout_size) * time.Second
+type Requests_body struct {
+	Timeout int64
+	Post    []byte // post json
+	Header  map[string]string
+}
+
+func (r *requests) Post_v1(host string, http_body *Requests_body) (string, int, error) {
+	timeout := time.Duration(http_body.Timeout) * time.Second
 	client := http.Client{
 		Timeout: timeout,
 	}
-	resp, err := client.Post(host, "application/json", bytes.NewBuffer(post))
+	resp, err := client.Post(host, "application/json", bytes.NewBuffer(http_body.Post))
 	if err != nil {
 		return "", 0, err
 	}
@@ -56,13 +62,16 @@ func (r *requests) Post_v1(host string, post []byte, timeout_size int64) (string
 	return string(body), resp.StatusCode, nil
 }
 
-func (r *requests) Head(host string, timeout_size int64) (header *http.Response, err error) {
-	timeout := time.Duration(timeout_size) * time.Second
+func (r *requests) Head(host string, http_body *Requests_body) (header *http.Response, err error) {
+	timeout := time.Duration(http_body.Timeout) * time.Second
 	client := http.Client{
 		Timeout: timeout,
 	}
 	req, err := http.NewRequest("HEAD", host, nil)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
+	for k, v := range http_body.Header {
+		req.Header.Set(k, v)
+	}
 	if err != nil {
 		return header, err
 	}
@@ -74,13 +83,16 @@ func (r *requests) Head(host string, timeout_size int64) (header *http.Response,
 	return resp, err
 }
 
-func (r *requests) Get(host string, timeout_size int64) (response string, code int, err error) {
-	timeout := time.Duration(timeout_size) * time.Second
+func (r *requests) Get(host string, http_body *Requests_body) (response string, code int, err error) {
+	timeout := time.Duration(http_body.Timeout) * time.Second
 	client := http.Client{
 		Timeout: timeout,
 	}
 	req, err := http.NewRequest("GET", host, nil)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36")
+	for k, v := range http_body.Header {
+		req.Header.Set(k, v)
+	}
 	if err != nil {
 		return response, code, err
 	}
