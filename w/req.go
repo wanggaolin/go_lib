@@ -41,7 +41,7 @@ func (r *requests) Post(host string, post string, timeout_size int64) (string, i
 // post Json
 type Requests_body struct {
 	Timeout int64
-	Post    []byte // post json
+	Body    []byte // post json
 	Header  map[string]string
 }
 
@@ -50,7 +50,7 @@ func (r *requests) Post_v1(host string, http_body *Requests_body) (string, int, 
 	client := http.Client{
 		Timeout: timeout,
 	}
-	resp, err := client.Post(host, "application/json", bytes.NewBuffer(http_body.Post))
+	resp, err := client.Post(host, "application/json", bytes.NewBuffer(http_body.Body))
 	if err != nil {
 		return "", 0, err
 	}
