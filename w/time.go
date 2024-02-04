@@ -40,8 +40,14 @@ func (t *timeing) Unix_to_beijing2(n int64) (beijingTimeString string) {
 	return beijingTimeString
 }
 
-// 2018-07-11 15:10:19  to 1531293019
+// 2018-07-11 15:10  to 1531293019
 func (t *timeing) Beijing1_to_unix(beijing_time string) int64 {
 	timespace, _ := time.Parse("2006-01-02 15:04", beijing_time)
+	return timespace.Unix()
+}
+
+// 2018-07-11 15:10:19  to 1531293019
+func (t *timeing) Beijing1_to_unix1(beijing_time string) int64 {
+	timespace, _ := time.Parse("2006-01-02 15:04:05", beijing_time)
 	return timespace.Unix()
 }
