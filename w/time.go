@@ -41,29 +41,29 @@ func (t *timeing) Unix_to_beijing2(n int64) (beijingTimeString string) {
 }
 
 // 2018-07-11 15:10  to 1531293019
-func Beijing1_to_unix(beijing_time string) (t int64, err error) {
+func (t *timeing) Beijing1_to_unix(beijing_time string) (ux int64, err error) {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
-		return t, err
+		return ux, err
 	}
 	tt, err := time.ParseInLocation("2006-01-02 15:04", beijing_time, loc)
 	if err != nil {
-		return t, err
+		return ux, err
 	}
-	t = tt.Unix()
-	return t, err
+	ux = tt.Unix()
+	return ux, err
 }
 
 // 2018-07-11 15:10:19  to 1531293019
-func Beijing1_to_unix1(beijing_time string) (t int64, err error) {
+func (t *timeing) Beijing1_to_unix1(beijing_time string) (ux int64, err error) {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
-		return t, err
+		return ux, err
 	}
 	tt, err := time.ParseInLocation("2006-01-02 15:04:05", beijing_time, loc)
 	if err != nil {
-		return t, err
+		return ux, err
 	}
-	t = tt.Unix()
-	return t, err
+	ux = tt.Unix()
+	return ux, err
 }
