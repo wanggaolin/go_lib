@@ -38,11 +38,44 @@ func (s set) IntersectInt64(slice1, slice2 []int64) []int64 {
 	return nn
 }
 
+// 求交集
+func (s set) IntersectString(slice1, slice2 []string) []string {
+	m := make(map[string]int64)
+	nn := make([]string, 0)
+	for _, v := range slice1 {
+		m[v]++
+	}
+	for _, v := range slice2 {
+		times, _ := m[v]
+		if times == 1 {
+			nn = append(nn, v)
+		}
+	}
+	return nn
+}
+
 // 求差集
 func (s set) DifferenceInt64(slice1, slice2 []int64) []int64 {
 	m := make(map[int64]int64)
 	nn := make([]int64, 0)
 	inter := s.IntersectInt64(slice1, slice2)
+	for _, v := range inter {
+		m[v]++
+	}
+	for _, value := range slice1 {
+		times, _ := m[value]
+		if times == 0 {
+			nn = append(nn, value)
+		}
+	}
+	return nn
+}
+
+// 求差集
+func (s set) DifferenceString(slice1, slice2 []string) []string {
+	m := make(map[string]int64)
+	nn := make([]string, 0)
+	inter := s.IntersectString(slice1, slice2)
 	for _, v := range inter {
 		m[v]++
 	}
