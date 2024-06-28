@@ -58,3 +58,6 @@ type lock struct {
 
 type xlsx struct {
 }
+
+type webhook struct {
+}
