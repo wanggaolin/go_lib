@@ -30,7 +30,7 @@ type Args_Xlsx_line_data struct {
 	Content    string // 内容
 	Color      string // 文字颜色,十六进制
 	Background string // 背景填充色,十六进制
-	Horizontal string // 剧中样式，center
+	Horizontal string // 居中样式，center
 	Width      int64  // 列宽
 }
 
