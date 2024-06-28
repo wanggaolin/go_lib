@@ -20,11 +20,11 @@ func init() {
 func (c *check) Check_ip(ip_name string) bool {
 	filter_ip := c.check_ip.FindStringSubmatch(ip_name)
 	if len(filter_ip) > 1 {
-		a, _ := strconv.Atoi(filter_ip[1])
-		b, _ := strconv.Atoi(filter_ip[2])
-		c, _ := strconv.Atoi(filter_ip[3])
-		d, _ := strconv.Atoi(filter_ip[4])
-		if a <= 255 && b <= 255 && c <= 255 && d <= 255 && a > 0 && d > 0 {
+		a1, _ := strconv.Atoi(filter_ip[1])
+		b1, _ := strconv.Atoi(filter_ip[2])
+		c1, _ := strconv.Atoi(filter_ip[3])
+		d1, _ := strconv.Atoi(filter_ip[4])
+		if a1 <= 255 && b1 <= 255 && c1 <= 255 && d1 <= 255 && a1 > 0 && d1 > 0 {
 			return true
 		}
 	}
