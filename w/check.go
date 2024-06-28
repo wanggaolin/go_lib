@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 var Check *check
@@ -68,6 +69,30 @@ func (c *check) Check_float(x string) bool {
 	} else {
 		return false
 	}
+}
+
+func (c *check) CheckTimeDay(x string) bool {
+	_, err := time.Parse("2006-01-02", x)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func (c *check) CheckTimeBeijing1(x string) bool {
+	_, err := time.Parse("2006-01-02 15:04:05", x)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
+func (c *check) CheckTimeBeijing2(x string) bool {
+	_, err := time.Parse("2006-01-02 15:04", x)
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 func Valid(a interface{}) {
