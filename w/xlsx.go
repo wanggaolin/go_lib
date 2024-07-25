@@ -1,7 +1,6 @@
 package w
 
 import (
-	"errors"
 	"fmt"
 	"github.com/xuri/excelize/v2"
 )
@@ -75,7 +74,7 @@ func (x *xlsx) get_sheet_name(sheel_list []string, n int) (name string, err erro
 			return item, nil
 		}
 	}
-	return name, errors.New("invalid sheet index")
+	return name, fmt.Errorf("invalid sheet index")
 }
 
 func (x *xlsx) get_cell_style(arg Args_Xlsx_line_data) (style *excelize.Style, is_set bool) {

@@ -10,7 +10,9 @@ import (
 var Table *table
 
 func init() {
-	Table = &table{}
+	Table = &table{
+		lineInterval: "  ",
+	}
 }
 
 func (t *table) AddHeader(args ...interface{}) {
@@ -49,11 +51,11 @@ func (t *table) to_interval(x string) string {
 	format_text := ""
 	for _, n := range t.w.cel {
 		interval := x
-		for s := range Make_range(1, n) {
+		for s := range Make_range(2, n) {
 			_ = s
 			interval += x
 		}
-		format_text += interval + "\t"
+		format_text += interval + t.lineInterval
 	}
 	return format_text
 }
@@ -80,9 +82,9 @@ func (t *table) get_list(interval string) []string {
 				if (len(r) + len(l)) < len(space) {
 					l += " "
 				}
-				format_text += r + cel_line + l + "\t"
+				format_text += r + cel_line + l + t.lineInterval
 			} else {
-				format_text += cel_line + space + "\t"
+				format_text += cel_line + space + t.lineInterval
 			}
 		}
 		if n == 1 {

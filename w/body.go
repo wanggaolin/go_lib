@@ -27,8 +27,9 @@ type set struct {
 }
 
 type table struct {
-	w    *write
-	test string
+	w            *write
+	test         string
+	lineInterval string // 行间隔符
 }
 
 type write struct {

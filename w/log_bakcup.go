@@ -1,7 +1,6 @@
 package w
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -16,7 +15,7 @@ import (
 
 func (f *fileing) Interface_log_backup(file_path string, back_dir string, file_action string) (bool, error) {
 	if f.PathExists(file_path) == false {
-		return false, errors.New(file_path + " :No such file or directory")
+		return false, fmt.Errorf(file_path + " :No such file or directory")
 	}
 
 	_t := time.Now()
@@ -56,7 +55,7 @@ func (f *fileing) Interface_log_backup(file_path string, back_dir string, file_a
 	}
 
 	if f.IsDir(backup_directory) == false {
-		return false, errors.New(backup_directory + " :This directory is not a directory")
+		return false, fmt.Errorf(backup_directory + " :This directory is not a directory")
 	}
 	new_file := path.Join(backup_directory, path.Base(file_path))
 
@@ -68,7 +67,7 @@ func (f *fileing) Interface_log_backup(file_path string, back_dir string, file_a
 				break
 			}
 			if n > 500 {
-				return false, errors.New("Too many duplicate file names")
+				return false, fmt.Errorf("Too many duplicate file names")
 			}
 		}
 	}

@@ -2,7 +2,6 @@ package w
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"os"
 	"os/exec"
@@ -40,7 +39,7 @@ func Shell_run(command string, arg ...string) (output string, err error) {
 	cmd.Stderr = &stderr
 	err = cmd.Run()
 	if err != nil {
-		return output, errors.New(fmt.Sprintf("%v(%v)", strings.TrimSpace(stderr.String()), err.Error()))
+		return output, fmt.Errorf("%v(%v)", strings.TrimSpace(stderr.String()), err.Error())
 	}
 	return out.String(), nil
 }
