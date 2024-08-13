@@ -2,6 +2,7 @@ package w
 
 import (
 	"fmt"
+	"golang.org/x/text/width"
 	"strings"
 )
 
@@ -35,12 +36,29 @@ func (t *table) to_build(args []interface{}) {
 	var ar []string
 	for n, i := range args {
 		idx := t.to_string(i)
-		if t.w.cel[n] < len(idx) {
-			t.w.cel[n] = len(idx)
+		idxlen := t.px_size(idx)
+		if t.w.cel[n] < idxlen {
+			t.w.cel[n] = idxlen
 		}
 		ar = append(ar, idx)
 	}
 	t.w.line = append(t.w.line, ar)
+}
+
+func (t *table) px_size(s string) (widthCount int) {
+	for _, r := range s {
+		widthCount += t.__getRuneWidth(r)
+	}
+	return widthCount
+}
+
+func (t *table) __getRuneWidth(r rune) int {
+	switch width.LookupRune(r).Kind() {
+	case width.EastAsianWide, width.EastAsianFullwidth:
+		return 2
+	default:
+		return 1
+	}
 }
 
 func (t *table) to_string(args interface{}) string {
@@ -71,7 +89,7 @@ func (t *table) get_list(interval string) []string {
 		format_text := ""
 		for cel_num, cel_line := range h {
 			space := ""
-			space_size := t.w.cel[cel_num] - len(cel_line)
+			space_size := t.w.cel[cel_num] - t.px_size(cel_line)
 			for s := range Make_range(1, space_size) {
 				_ = s
 				space += " "
