@@ -20,21 +20,20 @@ func init() {
 	File = &fileing{}
 }
 
-func (f *fileing) File_copy(src_path string, dst_path string) (bool, error) {
+func (f *fileing) File_copy(src_path string, dst_path string) (err error) {
 	srcFile, err := os.Open(src_path)
 	if err != nil {
-		return false, err
+		return
 	}
 	destFile, err := os.OpenFile(dst_path, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
-		return false, err
+		return
 	}
-	nBytes, err := io.Copy(destFile, srcFile)
-	_ = nBytes
+	_, err = io.Copy(destFile, srcFile)
 	if err != nil {
-		return false, err
+		return
 	}
-	return true, nil
+	return
 }
 
 func (f *fileing) ReadFile(file_name string) (string, error) {
