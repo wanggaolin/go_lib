@@ -64,3 +64,16 @@ func (r *arry) GetMaxInt64(arr []int64) int64 {
 	}
 	return max
 }
+
+func (r *arry) GetMaxFloat64(arr []float64) float64 {
+	if len(arr) == 0 {
+		return 0
+	}
+	max := arr[0]
+	for _, num := range arr {
+		if num > max {
+			max = num
+		}
+	}
+	return max
+}
