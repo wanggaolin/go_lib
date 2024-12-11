@@ -123,7 +123,6 @@ func (x *xlsx) Read(arg Args_Xlsx_get_data) (mapData []map[string]string, err er
 		if line_index <= (arg.X - 1) {
 			continue
 		}
-		fmt.Println(line_item)
 		row_data := map[string]string{}
 		for cell_index, cell_item := range line_item {
 			if cell_index <= (arg.Y - 1) {
