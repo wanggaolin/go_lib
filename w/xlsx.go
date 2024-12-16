@@ -26,11 +26,11 @@ type Args_Xlsx_write_data struct {
 }
 
 type Args_Xlsx_line_data struct {
-	Content    string // 内容
-	Color      string // 文字颜色,十六进制
-	Background string // 背景填充色,十六进制
-	Horizontal string // 居中样式，center
-	Width      int64  // 列宽
+	Content    interface{} // 内容
+	Color      string      // 文字颜色,十六进制
+	Background string      // 背景填充色,十六进制
+	Horizontal string      // 居中样式，center
+	Width      int64       // 列宽
 }
 
 func (x *xlsx) max_cell(row [][]string) (n int) {
