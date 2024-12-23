@@ -26,6 +26,10 @@ func (c *tea) Uint64(x uint64) *uint64 {
 	return &x
 }
 
+func (c *tea) Uint32(x uint32) *uint32 {
+	return &x
+}
+
 func (c *tea) Float64(x float64) *float64 {
 	return &x
 }
