@@ -95,3 +95,15 @@ func (t *timeing) Beijing1_to_unixMilli1(beijing_time string) (ux int64, err err
 	ux = tt.UnixMilli()
 	return ux, err
 }
+
+// 1735109090777 to 2024-12-25 14:44:50
+func (t *timeing) UnixMilli_to_beijing1(unix_time int64) string {
+	tm := time.UnixMilli(unix_time)
+	return tm.Format("2006-01-02 15:04:05")
+}
+
+// 1735109090777 to 2024-12-25 14:44
+func (t *timeing) UnixMilli_to_beijing2(unix_time int64) string {
+	tm := time.UnixMilli(unix_time)
+	return tm.Format("2006-01-02 15:04")
+}
