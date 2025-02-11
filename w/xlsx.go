@@ -20,9 +20,10 @@ type Args_Xlsx_get_data struct {
 }
 
 type Args_Xlsx_write_data struct {
-	File_path  string //创建文件路径
-	Sheet_Name string //创建表名
-	Data       [][]Args_Xlsx_line_data
+	File_path   string //创建文件路径
+	Sheet_Name  string //创建表名
+	Sheet_Index int    //写入表索引,默认:0
+	Data        [][]Args_Xlsx_line_data
 }
 
 type Args_Xlsx_line_data struct {
@@ -135,16 +136,43 @@ func (x *xlsx) Read(arg Args_Xlsx_get_data) (mapData []map[string]string, err er
 	return mapData, err
 }
 
+func (x *xlsx) __write_set_sheet(f *excelize.File, arg Args_Xlsx_write_data) (err error) {
+	if f.SheetCount < arg.Sheet_Index { // add sheet
+		_, err = f.NewSheet(arg.Sheet_Name)
+		return
+	}
+	var sheet_name string
+	sheet_name, err = x.get_sheet_name(f.GetSheetList(), arg.Sheet_Index)
+	if err != nil {
+		return
+	}
+	err = f.SetSheetName(sheet_name, arg.Sheet_Name) // set sheel name
+	if err != nil {
+		return
+	}
+	return
+}
+
 func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 	if arg.Sheet_Name == "" {
 		arg.Sheet_Name = "Sheet1"
 	}
-	f := excelize.NewFile()
+	var f *excelize.File
 	defer f.Close()
-	_, err = f.NewSheet(arg.Sheet_Name)
+	if File.PathExists(arg.File_path) {
+		f = excelize.NewFile()
+	} else {
+		f, err = excelize.OpenFile(arg.File_path)
+		if err != nil {
+			return
+		}
+	}
+	//fmt.Println(f, 123123)
+	err = x.__write_set_sheet(f, arg)
 	if err != nil {
 		return err
 	}
+	f.SetActiveSheet(arg.Sheet_Index)
 	row_width := map[string]int64{}
 	for row_index, row_item := range arg.Data {
 		placeY := x.to_String(row_index + 1)
@@ -176,9 +204,10 @@ func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 			}
 		}
 	}
-
-	if err = f.SaveAs(arg.File_path); err != nil {
-		return err
-	}
+	err = f.Save()
+	//err = f.SaveAs(arg.File_path)
+	//if err = f.SaveAs(arg.File_path); err != nil {
+	//	return err
+	//}
 	return err
 }
