@@ -158,16 +158,20 @@ func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 		arg.Sheet_Name = "Sheet1"
 	}
 	var f *excelize.File
-	defer f.Close()
-	if File.PathExists(arg.File_path) {
+	defer func() {
+		f.Close()
+	}()
+	var is_create_file bool
+	if File.PathExists(arg.File_path) == false {
 		f = excelize.NewFile()
+		is_create_file = true
 	} else {
+		is_create_file = false
 		f, err = excelize.OpenFile(arg.File_path)
 		if err != nil {
 			return
 		}
 	}
-	//fmt.Println(f, 123123)
 	err = x.__write_set_sheet(f, arg)
 	if err != nil {
 		return err
@@ -196,7 +200,6 @@ func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 			row_width[placeX] = cell_item.Width
 		}
 	}
-
 	for key, value := range row_width {
 		if value > 0 {
 			if err = f.SetColWidth(arg.Sheet_Name, key, key, float64(value)); err != nil {
@@ -204,7 +207,11 @@ func (x *xlsx) Write(arg Args_Xlsx_write_data) (err error) {
 			}
 		}
 	}
-	err = f.Save()
+	if is_create_file {
+		err = f.SaveAs(arg.File_path)
+	} else {
+		err = f.Save()
+	}
 	//err = f.SaveAs(arg.File_path)
 	//if err = f.SaveAs(arg.File_path); err != nil {
 	//	return err
