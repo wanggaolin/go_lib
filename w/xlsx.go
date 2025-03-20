@@ -75,7 +75,8 @@ func (x *xlsx) get_sheet_name(sheel_list []string, n int) (name string, err erro
 			return item, nil
 		}
 	}
-	return name, fmt.Errorf("invalid sheet index")
+
+	return name, fmt.Errorf("invalid sheet index, Must be less than: %d", len(sheel_list))
 }
 
 func (x *xlsx) get_cell_style(arg Args_Xlsx_line_data) (style *excelize.Style, is_set bool) {
@@ -137,9 +138,23 @@ func (x *xlsx) Read(arg Args_Xlsx_get_data) (mapData []map[string]string, err er
 }
 
 func (x *xlsx) __write_set_sheet(f *excelize.File, arg Args_Xlsx_write_data) (err error) {
-	if f.SheetCount < arg.Sheet_Index { // add sheet
+	if f.SheetCount <= arg.Sheet_Index { // add sheet
+		// 检查sheetName是否已经存在
+		sheetExists := false
+		for _, items := range f.GetSheetList() {
+			if items == arg.Sheet_Name {
+				sheetExists = true
+				break
+			}
+		}
+		if sheetExists == true {
+			err = fmt.Errorf("sheel name is exists")
+			return
+		}
 		_, err = f.NewSheet(arg.Sheet_Name)
-		return
+		if err != nil {
+			return
+		}
 	}
 	var sheet_name string
 	sheet_name, err = x.get_sheet_name(f.GetSheetList(), arg.Sheet_Index)
