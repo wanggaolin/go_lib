@@ -2,6 +2,7 @@ package w
 
 import (
 	"fmt"
+	"github.com/wanggaolin/go_lib/w"
 	"github.com/xuri/excelize/v2"
 )
 
@@ -67,6 +68,18 @@ func (x *xlsx) to_column(number int) string {
 
 func (x *xlsx) to_String(n interface{}) string {
 	return fmt.Sprintf("%v", n)
+}
+
+// 设置菜单
+func (x *xlsx) Set_Menu(menu []string) (xlsxData [][]Args_Xlsx_line_data) {
+	var line_menu []Args_Xlsx_line_data
+	for _, items := range menu {
+		line_menu = append(line_menu, Args_Xlsx_line_data{
+			Content: items,
+		})
+	}
+	xlsxData = append(xlsxData, line_menu)
+	return
 }
 
 func (x *xlsx) get_sheet_name(sheel_list []string, n int) (name string, err error) {
