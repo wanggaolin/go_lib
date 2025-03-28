@@ -5,7 +5,7 @@ go get github.com/wanggaolin/go_lib
 
 #### Update
 ```shell
-go get github.com/wanggaolin/go_lib@v1.3.2
+go get github.com/wanggaolin/go_lib@v1.3.3
 ```
 
 
