@@ -32,6 +32,7 @@ type Args_Xlsx_line_data struct {
 	Background string      // 背景填充色,十六进制
 	Horizontal string      // 居中样式，center
 	Width      int64       // 列宽
+	WrapText   bool        // 自动换行
 }
 
 func (x *xlsx) max_cell(row [][]string) (n int) {
@@ -110,6 +111,16 @@ func (x *xlsx) get_cell_style(arg Args_Xlsx_line_data) (style *excelize.Style, i
 	if arg.Horizontal != "" {
 		style.Alignment = &excelize.Alignment{
 			Horizontal: "center",
+		}
+		is_set = true
+	}
+	if arg.WrapText == true {
+		if style.Alignment == nil {
+			style.Alignment = &excelize.Alignment{
+				WrapText: true,
+			}
+		} else {
+			style.Alignment.WrapText = true
 		}
 		is_set = true
 	}

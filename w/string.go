@@ -56,6 +56,7 @@ func (s *go_string) Hide_keyword(arg Args_GoString_hide_keyword) (text string) {
 	return s.MushString("*", size)
 }
 
+// 根据字符串生成多个
 func (s *go_string) MushString(x string, n int) (text string) {
 	for i := 0; i < n; i++ {
 		text = text + x
