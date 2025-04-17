@@ -10,12 +10,12 @@ func init() {
 	Json = &w_json{}
 }
 
-func (j *w_json) Json_print(data interface{}) (jsonString string, err error) {
+func (j *w_json) Json_print(data interface{}) (jsonString string) {
 	jsonByte, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
-		return jsonString, err
+		return err.Error()
 	}
-	return string(jsonByte), err
+	return string(jsonByte)
 }
 
 func (j *w_json) Json_dumps(data interface{}) (jsonString string, err error) {
