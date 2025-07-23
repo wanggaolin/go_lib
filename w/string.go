@@ -1,6 +1,7 @@
 package w
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -62,4 +63,22 @@ func (s *go_string) MushString(x string, n int) (text string) {
 		text = text + x
 	}
 	return text
+}
+
+// 转in64,无论是否成功都返回int64
+func (s *go_string) ToInt64V1(x string) (strInt64 int64) {
+	strInt64, _ = strconv.ParseInt(x, 10, 64)
+	return
+}
+
+// 转in64
+func (s *go_string) ToInt64(x string) (strInt64 int64, err error) {
+	strInt64, err = strconv.ParseInt(x, 10, 64)
+	return
+}
+
+// 转float64
+func (s *go_string) ToFloat64(x string) (strFloat64 float64, err error) {
+	strFloat64, err = strconv.ParseFloat(x, 64)
+	return
 }
