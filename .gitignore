@@ -1,2 +1,4 @@
 .idea
 test.go
+.DS_Store
+*.xlsx
