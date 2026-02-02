@@ -36,3 +36,13 @@ func (l *loging) Log_panic(arg ...any) {
 func (l *loging) Log_warr(arg ...any) {
 	log.Println("[WARRING]", arg)
 }
+
+func (l *loging) Set_log_file(file_paht string) (err error) {
+	log_file, err := os.OpenFile(file_paht, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		return err
+	}
+	log.SetOutput(log_file)
+	log.SetFlags(log.Ldate | log.Ltime)
+	return err
+}
