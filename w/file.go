@@ -4,11 +4,12 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
-	"gopkg.in/yaml.v2"
 	"io"
 	"io/fs"
 	"io/ioutil"
 	"os"
+
+	"gopkg.in/yaml.v2"
 )
 
 var File *fileing
@@ -64,7 +65,7 @@ func (f *fileing) FileContent_to_Map(file_path string) (map[string]interface{}, 
 
 func (f *fileing) JsonFile_to_yaml(file_path string) (map[string]interface{}, error) {
 	t := map[string]interface{}{}
-	buffer, err := ioutil.ReadFile(file_path)
+	buffer, err := os.ReadFile(file_path)
 	if err != nil {
 		return nil, err
 	}
@@ -77,10 +78,10 @@ func (f *fileing) JsonFile_to_yaml(file_path string) (map[string]interface{}, er
 
 func (f *fileing) FileState(file_path string) (os.FileInfo, error) {
 	file, err := os.Open(file_path)
-	defer file.Close()
 	if err != nil {
 		return nil, err
 	}
+	defer file.Close()
 	fi, errs := file.Stat()
 	if errs != nil {
 		return nil, errs
@@ -107,7 +108,7 @@ func (f *fileing) IsDir(path string) bool {
 }
 
 func _list_dir(filePath string, s []string) ([]string, error) {
-	files, err := ioutil.ReadDir(filePath)
+	files, err := os.ReadDir(filePath)
 	if err != nil {
 		return nil, err
 	} else {
@@ -135,9 +136,6 @@ func (f *fileing) List_directory(directory_name string) ([]fs.FileInfo, error) {
 	}
 	for _, file_name := range file_list {
 		data = append(data, file_name)
-	}
-	if data == nil {
-		data = append(data)
 	}
 	return data, nil
 }
