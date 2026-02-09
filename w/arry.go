@@ -77,3 +77,18 @@ func (r *arry) GetMaxFloat64(arr []float64) (maxFloat float64) {
 	}
 	return maxFloat
 }
+
+func (r *arry) SumFloat64(x []float64) (sum float64) {
+	for _, num := range x {
+		sum += num
+	}
+	sum = float64(int(sum*100)) / 100
+	return
+}
+
+func (r *arry) SumInt64(x []int64) (sum int64) {
+	for _, num := range x {
+		sum += num
+	}
+	return
+}

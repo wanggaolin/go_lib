@@ -2,6 +2,7 @@ package w
 
 import (
 	"bytes"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -50,12 +51,20 @@ func (r *requests) Post_v1(host string, http_body *Requests_body) (string, int, 
 	client := http.Client{
 		Timeout: timeout,
 	}
-	resp, err := client.Post(host, "application/json", bytes.NewBuffer(http_body.Body))
+	req, err := http.NewRequest("POST", host, bytes.NewBuffer(http_body.Body))
+	if err != nil {
+		return "", 0, err
+	}
+	for k, v := range http_body.Header {
+		req.Header.Set(k, v)
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return "", 0, err
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", 0, err
 	}
