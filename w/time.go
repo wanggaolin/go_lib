@@ -25,6 +25,10 @@ func (t *timeing) Current_time2() string {
 	return time.Now().Format("200601021504")
 }
 
+func (t *timeing) Current_time3() string {
+	return time.Now().Format("2006-01-02 15:04")
+}
+
 // 1531293019 to 2018-07-11 15:10:19
 func (t *timeing) Unix_to_beijing1(unix_time int64) string {
 	tm := time.Unix(unix_time, 0)
@@ -38,6 +42,18 @@ func (t *timeing) Unix_to_beijing2(n int64) (beijingTimeString string) {
 	beijingTime := tm.In(time.FixedZone("CST", 8*60*60))
 	beijingTimeString = beijingTime.Format("2006-01-02 15:04:05")
 	return beijingTimeString
+}
+
+// 1735109090777 to 2024-12-25 14:44:50
+func (t *timeing) UnixMilli_to_beijing1(unix_time int64) string {
+	tm := time.UnixMilli(unix_time)
+	return tm.Format("2006-01-02 15:04:05")
+}
+
+// 1735109090777 to 2024-12-25 14:44
+func (t *timeing) UnixMilli_to_beijing2(unix_time int64) string {
+	tm := time.UnixMilli(unix_time)
+	return tm.Format("2006-01-02 15:04")
 }
 
 // 2018-07-11 15:10  to 1531293019
@@ -94,16 +110,4 @@ func (t *timeing) Beijing1_to_unixMilli1(beijing_time string) (ux int64, err err
 	}
 	ux = tt.UnixMilli()
 	return ux, err
-}
-
-// 1735109090777 to 2024-12-25 14:44:50
-func (t *timeing) UnixMilli_to_beijing1(unix_time int64) string {
-	tm := time.UnixMilli(unix_time)
-	return tm.Format("2006-01-02 15:04:05")
-}
-
-// 1735109090777 to 2024-12-25 14:44
-func (t *timeing) UnixMilli_to_beijing2(unix_time int64) string {
-	tm := time.UnixMilli(unix_time)
-	return tm.Format("2006-01-02 15:04")
 }
